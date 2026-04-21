@@ -1,0 +1,15 @@
+{
+    "name": "CampVoice Management System",
+    "short_name": "CampVoice",
+    "start_url": "index.jsp",
+    "display": "standalone",
+    "background_color": "#1e293b",
+    "theme_color": "#3498db",
+    "icons": [
+        {
+            "src": "https://cdn-icons-png.flaticon.com/512/5058/5058432.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
