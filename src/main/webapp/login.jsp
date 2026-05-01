@@ -11,7 +11,7 @@
             <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
             <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap"
                 rel="stylesheet">
-
+            <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/assets/img/logo.png">
             <style>
                 :root {
                     --primary-color: #1e293b;
@@ -201,18 +201,21 @@
                                     </div>
                                     <% } %>
 
-                                        <form method="post" action="login">
+                                        <!-- ✅ autocomplete="off" prevents browser from autofilling saved credentials -->
+                                        <form method="post" action="login" autocomplete="off">
+
                                             <div class="form-floating position-relative mb-3">
                                                 <i class="bi bi-person input-icon"></i>
                                                 <input type="text" class="form-control" id="username" name="username"
-                                                    placeholder="Username" required>
+                                                    placeholder="Username" required autocomplete="off">
                                                 <label for="username" class="ms-4 ps-3">Username</label>
                                             </div>
 
                                             <div class="form-floating position-relative mb-4">
                                                 <i class="bi bi-lock input-icon"></i>
                                                 <input type="password" class="form-control" id="password"
-                                                    name="password" placeholder="Password" required>
+                                                    name="password" placeholder="Password" required
+                                                    autocomplete="new-password">
                                                 <label for="password" class="ms-4 ps-3">Password</label>
                                             </div>
 

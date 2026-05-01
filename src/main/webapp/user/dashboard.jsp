@@ -127,7 +127,8 @@
                             placeholder="Search history..." onkeyup="filterComplaints()">
                         </div>
 
-                        <a href="addComplaint.jsp"
+                        <!-- ✅ FIXED: removed .jsp so it goes through the servlet -->
+                        <a href="addComplaint"
                           class="btn btn-info btn-sm rounded-pill px-3 me-lg-2 mb-2 mb-lg-0 text-white d-block d-lg-inline-block">
                           <i class="fas fa-plus me-1"></i>New Complaint
                         </a>
@@ -211,7 +212,9 @@
                       <div class="card shadow-sm">
                         <div
                           class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
-                          <h5 class="mb-0 fw-bold small"><i class="fas fa-history me-2 text-secondary"></i>History</h5>
+                          <h5 class="mb-0 fw-bold small">
+                            <i class="fas fa-history me-2 text-secondary"></i>History
+                          </h5>
                         </div>
                         <div class="card-body p-0">
                           <div class="table-responsive">
@@ -312,7 +315,7 @@
                       if (result.isConfirmed) {
                         window.location.href = "dashboard?complainID=" + id;
                       }
-                    })
+                    });
                   }
                 </script>
           </body>

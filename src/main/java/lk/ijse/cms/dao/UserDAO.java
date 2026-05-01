@@ -8,8 +8,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO {
+
     public static Boolean addUser(ServletContext context, String sql, Object... obj) throws SQLException {
         BasicDataSource dataSource = (BasicDataSource) context.getAttribute("ds");
         Connection connection = dataSource.getConnection();
@@ -37,11 +40,40 @@ public class UserDAO {
                     resultSet.getInt("id"),
                     resultSet.getString("username"),
                     resultSet.getString("password"),
-                    resultSet.getString("role")
-            );
-
+                    resultSet.getString("role"));
         }
         connection.close();
         return user;
+    }
+
+    // ✅ Get ALL admin emails from DB
+    public static List<String> getAllAdminEmails(ServletContext context) throws SQLException {
+        BasicDataSource dataSource = (BasicDataSource) context.getAttribute("ds");
+        Connection connection = dataSource.getConnection();
+        PreparedStatement ps = connection.prepareStatement(
+                "SELECT email FROM users WHERE role = 'ADMIN'");
+        ResultSet rs = ps.executeQuery();
+        List<String> emails = new ArrayList<>();
+        while (rs.next()) {
+            emails.add(rs.getString("email"));
+        }
+        connection.close();
+        return emails;
+    }
+
+    // ✅ Get student email by username
+    public static String getEmailByUsername(ServletContext context, String username) throws SQLException {
+        BasicDataSource dataSource = (BasicDataSource) context.getAttribute("ds");
+        Connection connection = dataSource.getConnection();
+        PreparedStatement ps = connection.prepareStatement(
+                "SELECT email FROM users WHERE username = ?");
+        ps.setString(1, username);
+        ResultSet rs = ps.executeQuery();
+        String email = null;
+        if (rs.next()) {
+            email = rs.getString("email");
+        }
+        connection.close();
+        return email;
     }
 }

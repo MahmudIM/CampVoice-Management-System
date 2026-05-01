@@ -99,7 +99,6 @@
                         color: #e74c3c;
                     }
 
-                    /* Tablet/Mobile Adjustments */
                     @media (max-width: 768px) {
                         .form-container {
                             margin: 1rem;
@@ -118,12 +117,11 @@
             </head>
 
             <body>
-                <% /* Safe Logic Initialization */ lk.ijse.cms.model.Complain complaint=(lk.ijse.cms.model.Complain)
-                    request.getAttribute("complain"); String message=(String) request.getAttribute("message"); String
-                    pageTitle=(complaint !=null) ? "Refine Your Voice" : "Raise a New Voice" ; String
-                    buttonText=(complaint !=null) ? "Update Complaint" : "Submit Complaint" ; String
-                    currentUser="Student User" ; if (session !=null && session.getAttribute("user") !=null) {
-                    currentUser=(String) session.getAttribute("user"); } %>
+                <% lk.ijse.cms.model.Complain complaint=(lk.ijse.cms.model.Complain) request.getAttribute("complain");
+                    String message=(String) request.getAttribute("message"); String pageTitle=(complaint !=null)
+                    ? "Refine Your Voice" : "Raise a New Voice" ; String buttonText=(complaint !=null)
+                    ? "Update Complaint" : "Submit Complaint" ; String currentUser="Student User" ; if (session !=null
+                    && session.getAttribute("user") !=null) { currentUser=(String) session.getAttribute("user"); } %>
 
                     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom py-2">
                         <div class="container">
@@ -145,7 +143,8 @@
                                 <h3 class="fw-bold mb-1">
                                     <%= pageTitle %>
                                 </h3>
-                                <p class="opacity-75 mb-0 small">Please provide accurate details for faster resolution.
+                                <p class="opacity-75 mb-0 small">
+                                    Please provide accurate details for faster resolution.
                                 </p>
                             </div>
 
@@ -172,7 +171,7 @@
                                                     <label class="form-label">Department <span
                                                             class="required">*</span></label>
                                                     <input type="text" class="form-control" name="department"
-                                                        placeholder="e.g. Computer Science"
+                                                        placeholder="e.g. Computer Engineering"
                                                         value="<%= (complaint != null) ? complaint.getDepartment() : "" %>"
                                                         required>
                                                 </div>
@@ -181,7 +180,7 @@
                                                     <label class="form-label">Course / Program <span
                                                             class="required">*</span></label>
                                                     <input type="text" class="form-control" name="course"
-                                                        placeholder="e.g. B.Sc Software"
+                                                        placeholder="e.g. B.Eng Computer"
                                                         value="<%= (complaint != null) ? complaint.getCourse() : "" %>"
                                                         required>
                                                 </div>
@@ -216,8 +215,8 @@
                                                 !complaint.getRemarks().isEmpty()) { %>
                                                 <div
                                                     class="mt-4 p-3 bg-light rounded border-start border-4 border-info">
-                                                    <h6 class="fw-bold text-info small"><i
-                                                            class="bi bi-patch-question me-1"></i>Official Feedback:
+                                                    <h6 class="fw-bold text-info small">
+                                                        <i class="bi bi-patch-question me-1"></i>Official Feedback:
                                                     </h6>
                                                     <p class="mb-0 text-secondary small">
                                                         <%= complaint.getRemarks() %>
@@ -226,13 +225,16 @@
                                                 <% } %>
                                         </div>
 
-                                        <div
-                                            class="bg-light px-3 py-3 d-flex flex-column flex-sm-row justify-content-between align-items-center">
-                                            <span class="text-muted small mb-3 mb-sm-0"><span class="required">*</span>
-                                                Required fields</span>
+                                        <div class="bg-light px-3 py-3 d-flex flex-column flex-sm-row
+                     justify-content-between align-items-center">
+                                            <span class="text-muted small mb-3 mb-sm-0">
+                                                <span class="required">*</span> Required fields
+                                            </span>
                                             <div class="d-flex w-100 w-sm-auto justify-content-end">
                                                 <a href="dashboard"
-                                                    class="btn btn-link text-decoration-none text-secondary me-3 small align-self-center">Discard</a>
+                                                    class="btn btn-link text-decoration-none text-secondary me-3 small align-self-center">
+                                                    Discard
+                                                </a>
                                                 <button type="submit" class="btn btn-submit shadow-sm">
                                                     <%= buttonText %>
                                                 </button>

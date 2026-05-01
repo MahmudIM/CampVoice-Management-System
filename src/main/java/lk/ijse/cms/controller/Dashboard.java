@@ -49,7 +49,7 @@ public class Dashboard extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(false);
 
-        // 1. Authentication Check: Is the user logged in?
+        // 1. Authentication Check
         if (session == null || session.getAttribute("user") == null || session.getAttribute("role") == null) {
             resp.sendRedirect("login.jsp");
             return;
@@ -61,44 +61,46 @@ public class Dashboard extends HttpServlet {
         ServletContext context = getServletContext();
 
         try {
-            // 2. Handle Deletion logic
+            // 2. Handle Deletion
             if (complainID != null && !complainID.isEmpty()) {
                 deleteComplaint(complainID, context);
-                req.setAttribute("message", "Complaint deleted successfully.");
+                session.setAttribute("message", "Complaint deleted successfully.");
+                resp.sendRedirect(req.getContextPath() + "/dashboard");
+                return;
+            }
+
+            // 3. Pick up any session message and move to request
+            String sessionMessage = (String) session.getAttribute("message");
+            if (sessionMessage != null) {
+                req.setAttribute("message", sessionMessage);
+                session.removeAttribute("message"); // ✅ Clear after use
             }
 
             List<Complain> complaintList;
 
-            // 3. SECURE ROLE-BASED ROUTING
+            // 4. Role-based routing
             if ("ADMIN".equals(role)) {
-                // ADMIN sees every "Voice" on campus
-                complaintList = ComplainDAO.getComplains(context, "SELECT * FROM complain ORDER BY created_at DESC");
+                complaintList = ComplainDAO.getComplains(
+                        context, "SELECT * FROM complain ORDER BY created_at DESC");
                 req.setAttribute("complaintList", complaintList);
                 req.setAttribute("statusCount", getComplaintStatusCount(complaintList));
-
-                // Securely forward to the Admin area
                 req.getRequestDispatcher("/admin/dashboard.jsp").forward(req, resp);
 
             } else if ("STUDENT".equals(role)) {
-                // STUDENT sees only THEIR records
                 String sql = "SELECT * FROM complain WHERE studentId = ? ORDER BY created_at DESC";
                 complaintList = ComplainDAO.getComplains(context, sql, userID);
-
                 req.setAttribute("complaintList", complaintList);
                 req.setAttribute("statusCount", getComplaintStatusCount(complaintList));
-
-                // Securely forward to the Student area
                 req.getRequestDispatcher("/user/dashboard.jsp").forward(req, resp);
 
             } else {
-                // FALLBACK: If role is unrecognized, force logout for security
                 session.invalidate();
                 resp.sendRedirect("login.jsp");
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new ServletException("Database error in Dashboard processing", e);
+            throw new ServletException("Database error in Dashboard", e);
         }
     }
 }

@@ -9,16 +9,18 @@
                     <head>
                         <meta charset="UTF-8">
                         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>Admin Dashboard - CampVoice</title>
+                        <title>Admin Dashboard | CampVoice</title>
+
+                        <!-- 🚀 GLOBAL BRANDING: Replaces the Tomcat Cat from image_3e891b.png -->
+                        <link rel="icon" type="image/png" href="<%= request.getContextPath() %>/assets/img/logo.png">
 
                         <link rel="manifest" href="<%= request.getContextPath() %>/manifest.json">
                         <meta name="mobile-web-app-capable" content="yes">
                         <meta name="apple-mobile-web-app-capable" content="yes">
                         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
                         <meta name="theme-color" content="#1e293b">
-                        <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/5058/5058432.png">
 
-                        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+                        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
                             rel="stylesheet">
                         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
                             rel="stylesheet">
@@ -38,7 +40,17 @@
 
                             .navbar-custom {
                                 background: linear-gradient(to right, var(--primary-color), #0f172a);
-                                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                                padding: 0.8rem 1rem;
+                            }
+
+                            /* 🎨 Logo Glow Effect */
+                            .brand-logo-img {
+                                width: 40px;
+                                height: 40px;
+                                object-fit: contain;
+                                filter: drop-shadow(0 0 5px rgba(52, 152, 219, 0.5));
+                                margin-right: 12px;
                             }
 
                             .card {
@@ -71,28 +83,20 @@
                                 color: white !important;
                             }
 
-                            .search-input::placeholder {
-                                color: rgba(255, 255, 255, 0.5);
-                            }
-
                             .brand-text {
-                                letter-spacing: 2px;
+                                letter-spacing: 1px;
                                 font-weight: 700;
-                                color: #3498db;
+                                color: #fff;
+                                text-transform: uppercase;
                             }
 
                             .app-footer {
                                 margin-top: 3rem;
-                                padding-bottom: 2rem;
-                                color: #999;
+                                padding: 2rem 0;
+                                color: #94a3b8;
                                 font-size: 0.85rem;
                                 text-align: center;
-                            }
-
-                            @media (max-width: 991px) {
-                                .navbar-brand span {
-                                    font-size: 0.85rem;
-                                }
+                                border-top: 1px solid #e2e8f0;
                             }
                         </style>
                     </head>
@@ -104,14 +108,15 @@
                                 int displayId = 0;
                                 %>
 
-                                <nav class="navbar navbar-expand-lg navbar-dark navbar-custom py-3">
+                                <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
                                     <div class="container-fluid">
                                         <a class="navbar-brand d-flex align-items-center" href="#">
-                                            <i class="fas fa-user-shield me-2 text-info"></i>
+                                            <!-- 🎨 REAL LOGO IMAGE -->
+                                            <img src="<%= request.getContextPath() %>/assets/img/logo.png"
+                                                class="brand-logo-img" alt="CV">
                                             <span class="brand-text">CampVoice</span>
-                                            <span
-                                                class="badge bg-warning text-dark ms-2 fw-bold d-none d-sm-inline">Admin
-                                                Control</span>
+                                            <span class="badge bg-info text-dark ms-2 fw-bold d-none d-sm-inline">ADMIN
+                                                PANEL</span>
                                         </a>
 
                                         <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
@@ -125,11 +130,11 @@
                                                     <i
                                                         class="fas fa-search position-absolute top-50 translate-middle-y ms-3 text-white-50"></i>
                                                     <input class="form-control form-control-sm search-input w-100"
-                                                        type="search" id="searchInput" placeholder="Search requests..."
-                                                        onkeyup="filterComplaints()">
+                                                        type="search" id="searchInput"
+                                                        placeholder="Filter complaints..." onkeyup="filterComplaints()">
                                                 </div>
-                                                <a href="logout"
-                                                    class="btn btn-outline-light btn-sm rounded-pill px-3 d-block d-lg-inline-block">
+                                                <a href="<%= request.getContextPath() %>/logout"
+                                                    class="btn btn-danger btn-sm rounded-pill px-4">
                                                     <i class="fas fa-sign-out-alt me-1"></i>Logout
                                                 </a>
                                             </div>
@@ -138,8 +143,10 @@
                                 </nav>
 
                                 <div class="container py-4 py-lg-5">
-                                    <h2 class="mb-4 fw-bold text-dark text-center text-lg-start">Management Overview
-                                    </h2>
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                        <h2 class="fw-bold text-dark mb-0">System Overview</h2>
+                                        <span class="text-muted small">Academic Session 2025/2026</span>
+                                    </div>
 
                                     <% if (message !=null) { %>
                                         <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm"
@@ -151,103 +158,88 @@
                                         </div>
                                         <% } %>
 
+                                            <!-- Statistics Cards -->
                                             <div class="row g-3 g-lg-4 mb-5">
                                                 <div class="col-6 col-md-3">
                                                     <div
-                                                        class="card shadow-sm text-center p-2 p-lg-3 border-warning-custom h-100">
-                                                        <div class="card-body">
-                                                            <i
-                                                                class="fas fa-hourglass-half fa-lg text-warning mb-2"></i>
-                                                            <h4 class="fw-bold mb-0">
-                                                                <%= statusCount !=null ? statusCount.getPending() : 0 %>
-                                                            </h4>
-                                                            <p class="small text-muted mb-0">New</p>
-                                                        </div>
+                                                        class="card shadow-sm text-center p-3 border-warning-custom h-100">
+                                                        <i class="fas fa-clock fa-2x text-warning mb-2"></i>
+                                                        <h3 class="fw-bold mb-0">
+                                                            <%= statusCount !=null ? statusCount.getPending() : 0 %>
+                                                        </h3>
+                                                        <p class="small text-muted mb-0">Pending</p>
                                                     </div>
                                                 </div>
                                                 <div class="col-6 col-md-3">
                                                     <div
-                                                        class="card shadow-sm text-center p-2 p-lg-3 border-info-custom h-100">
-                                                        <div class="card-body">
-                                                            <i class="fas fa-spinner fa-spin fa-lg text-info mb-2"></i>
-                                                            <h4 class="fw-bold mb-0">
-                                                                <%= statusCount !=null ? statusCount.getInProgress() : 0
-                                                                    %>
-                                                            </h4>
-                                                            <p class="small text-muted mb-0">Progress</p>
-                                                        </div>
+                                                        class="card shadow-sm text-center p-3 border-info-custom h-100">
+                                                        <i class="fas fa-sync fa-spin fa-2x text-info mb-2"></i>
+                                                        <h3 class="fw-bold mb-0">
+                                                            <%= statusCount !=null ? statusCount.getInProgress() : 0 %>
+                                                        </h3>
+                                                        <p class="small text-muted mb-0">In Progress</p>
                                                     </div>
                                                 </div>
                                                 <div class="col-6 col-md-3">
                                                     <div
-                                                        class="card shadow-sm text-center p-2 p-lg-3 border-success-custom h-100">
-                                                        <div class="card-body">
-                                                            <i class="fas fa-check-double fa-lg text-success mb-2"></i>
-                                                            <h4 class="fw-bold mb-0">
-                                                                <%= statusCount !=null ? statusCount.getResolved() : 0
-                                                                    %>
-                                                            </h4>
-                                                            <p class="small text-muted mb-0">Resolved</p>
-                                                        </div>
+                                                        class="card shadow-sm text-center p-3 border-success-custom h-100">
+                                                        <i class="fas fa-check-circle fa-2x text-success mb-2"></i>
+                                                        <h3 class="fw-bold mb-0">
+                                                            <%= statusCount !=null ? statusCount.getResolved() : 0 %>
+                                                        </h3>
+                                                        <p class="small text-muted mb-0">Resolved</p>
                                                     </div>
                                                 </div>
                                                 <div class="col-6 col-md-3">
                                                     <div
-                                                        class="card shadow-sm text-center p-2 p-lg-3 border-primary-custom h-100">
-                                                        <div class="card-body">
-                                                            <i class="fas fa-folder-open fa-lg text-primary mb-2"></i>
-                                                            <h4 class="fw-bold mb-0">
-                                                                <%= statusCount !=null ? statusCount.getTotalCount() : 0
-                                                                    %>
-                                                            </h4>
-                                                            <p class="small text-muted mb-0">Total</p>
-                                                        </div>
+                                                        class="card shadow-sm text-center p-3 border-primary-custom h-100">
+                                                        <i class="fas fa-database fa-2x text-primary mb-2"></i>
+                                                        <h3 class="fw-bold mb-0">
+                                                            <%= statusCount !=null ? statusCount.getTotalCount() : 0 %>
+                                                        </h3>
+                                                        <p class="small text-muted mb-0">Total Cases</p>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div class="card shadow-sm">
                                                 <div class="card-header bg-white border-bottom py-3">
-                                                    <h5 class="mb-0 fw-bold small"><i
-                                                            class="fas fa-tasks me-2 text-secondary"></i>Requests Queue
-                                                    </h5>
+                                                    <h5 class="mb-0 fw-bold"><i
+                                                            class="fas fa-list-ul me-2 text-primary"></i>Active
+                                                        Complaints Queue</h5>
                                                 </div>
                                                 <div class="card-body p-0">
                                                     <div class="table-responsive">
-                                                        <table class="table table-hover mb-0 align-middle"
-                                                            style="min-width: 700px;">
-                                                            <thead class="bg-light">
+                                                        <table class="table table-hover mb-0 align-middle">
+                                                            <thead class="table-light text-uppercase"
+                                                                style="font-size: 0.75rem;">
                                                                 <tr>
                                                                     <th class="ps-4">ID</th>
-                                                                    <th>Student / Dept</th>
+                                                                    <th>Student ID</th>
                                                                     <th>Subject</th>
-                                                                    <th width="25%">Description</th>
+                                                                    <th width="30%">Message</th>
                                                                     <th>Status</th>
-                                                                    <th>Date</th>
-                                                                    <th class="text-center">Action</th>
+                                                                    <th>Actions</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody id="complaintsTableBody">
                                                                 <% if (complaints !=null && !complaints.isEmpty()) { for
                                                                     (Complain c : complaints) { %>
                                                                     <tr>
-                                                                        <td class="ps-4 text-muted small">
-                                                                            <%= ++displayId %>
+                                                                        <td class="ps-4 text-muted">#<%= ++displayId %>
                                                                         </td>
                                                                         <td>
-                                                                            <span class="fw-bold text-primary small">
+                                                                            <span class="fw-bold text-dark">
                                                                                 <%= c.getStudentId() %>
                                                                             </span><br>
-                                                                            <span class="text-muted"
-                                                                                style="font-size: 0.75rem;">
+                                                                            <small class="text-muted">
                                                                                 <%= c.getDepartment() %>
-                                                                            </span>
+                                                                            </small>
                                                                         </td>
-                                                                        <td class="fw-semibold small">
+                                                                        <td class="fw-semibold">
                                                                             <%= c.getTitle() %>
                                                                         </td>
-                                                                        <td class="small text-secondary"
-                                                                            style="font-size: 0.8rem;">
+                                                                        <td class="small text-secondary">
                                                                             <%= c.getDescription() %>
                                                                         </td>
                                                                         <td>
@@ -259,38 +251,31 @@
                                                                                 status.contains("progress") ? "info"
                                                                                 : "success" ; %>
                                                                                 <span
-                                                                                    class="badge rounded-pill bg-<%= badge %> px-2 py-1"
-                                                                                    style="font-size: 0.7rem;">
-                                                                                    <%= c.getStatus().toUpperCase() %>
+                                                                                    class="badge rounded-pill bg-<%= badge %> px-3 py-2 text-uppercase">
+                                                                                    <%= c.getStatus() %>
                                                                                 </span>
                                                                         </td>
-                                                                        <td class="small text-muted"
-                                                                            style="font-size: 0.75rem;">
-                                                                            <%= c.getCreated_at() %>
-                                                                        </td>
-                                                                        <td class="text-center">
-                                                                            <div class="btn-group shadow-sm">
-                                                                                <a href="admin/editComplaint.jsp?complainID=<%= c.getId() %>"
-                                                                                    class="btn btn-white btn-sm border-end">
-                                                                                    <i
-                                                                                        class="fas fa-reply text-primary"></i>
+                                                                        <td>
+                                                                            <div class="btn-group">
+                                                                                <a href="<%= request.getContextPath() %>/admin/editComplaint.jsp?complainID=<%= c.getId() %>&studentId=<%= c.getStudentId() %>"
+                                                                                    class="btn btn-sm btn-outline-primary">
+                                                                                    <i class="fas fa-edit"></i>
                                                                                 </a>
                                                                                 <button
                                                                                     onclick="confirmDelete(<%= c.getId() %>)"
-                                                                                    class="btn btn-white btn-sm">
-                                                                                    <i
-                                                                                        class="fas fa-trash-alt text-danger"></i>
+                                                                                    class="btn btn-sm btn-outline-danger">
+                                                                                    <i class="fas fa-trash"></i>
                                                                                 </button>
                                                                             </div>
                                                                         </td>
                                                                     </tr>
                                                                     <% } } else { %>
                                                                         <tr>
-                                                                            <td colspan="7" class="text-center py-5">
+                                                                            <td colspan="6" class="text-center py-5">
                                                                                 <i
-                                                                                    class="fas fa-check-circle fa-2x mb-3 text-success opacity-25"></i>
-                                                                                <p class="text-muted small">Queue Clear!
-                                                                                </p>
+                                                                                    class="fas fa-check-circle fa-3x mb-3 text-success opacity-25"></i>
+                                                                                <p class="text-muted">No pending
+                                                                                    complaints. Well done!</p>
                                                                             </td>
                                                                         </tr>
                                                                         <% } %>
@@ -301,7 +286,8 @@
                                             </div>
 
                                             <footer class="app-footer">
-                                                <p>© 2026 @Compeng - Ahmadu Bello University (CampVoice)</p>
+                                                <p>© 2026 CampVoice | Dept of Computer Engineering | Ahmadu Bello
+                                                    University</p>
                                             </footer>
                                 </div>
 
@@ -319,16 +305,16 @@
 
                                     function confirmDelete(id) {
                                         Swal.fire({
-                                            title: 'Delete Permanently?',
-                                            text: "Remove from system?",
-                                            icon: 'error',
+                                            title: 'Are you sure?',
+                                            text: "This complaint will be permanently removed!",
+                                            icon: 'warning',
                                             showCancelButton: true,
                                             confirmButtonColor: '#d33',
-                                            cancelButtonColor: '#3498db',
-                                            confirmButtonText: 'Delete'
+                                            cancelButtonColor: '#3085d6',
+                                            confirmButtonText: 'Yes, delete it!'
                                         }).then((result) => {
                                             if (result.isConfirmed) {
-                                                window.location.href = "dashboard?complainID=" + id + "&delete=true";
+                                                window.location.href = "<%= request.getContextPath() %>/dashboard?complainID=" + id + "&delete=true";
                                             }
                                         });
                                     }

@@ -19,8 +19,10 @@ public class Login extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        if (username == null || username.isEmpty()) {
-            resp.sendRedirect(req.getContextPath() + "/login.jsp");
+        // Basic validation for empty fields
+        if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+            req.setAttribute("errorMessage", "Please enter both username and password.");
+            req.getRequestDispatcher("login.jsp").forward(req, resp);
             return;
         }
 
@@ -29,24 +31,18 @@ public class Login extends HttpServlet {
             User user = UserDAO.findUserByUsername(getServletContext(), sql, username);
 
             if (user == null || !UserEncryption.decrypt(password, user.getPassword())) {
-                // Invalid login
                 req.setAttribute("errorMessage", "Invalid username or password.");
                 req.getRequestDispatcher("login.jsp").forward(req, resp);
                 return;
             }
 
-            // --- VALID LOGIN LOGIC ---
+            // Valid login — store session
             HttpSession session = req.getSession();
-
-            /*
-             * FIX: We store the 'username' as the session identifier.
-             * This ensures that Dashboard.java can use this String to filter
-             * the 'complain' table where the column 'studentId' matches this name.
-             */
             session.setAttribute("user", user.getUsername());
             session.setAttribute("role", user.getRole());
 
-            // Redirect to the unified dashboard controller
+            // ✅ FIXED: Both ADMIN and STUDENT go through Dashboard servlet
+            // Dashboard.java handles role-based routing automatically
             resp.sendRedirect(req.getContextPath() + "/dashboard");
 
         } catch (Exception e) {

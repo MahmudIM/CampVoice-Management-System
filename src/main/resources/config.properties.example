@@ -1,0 +1,5 @@
+# Copy this file to config.properties and fill in your real details
+# config.properties is gitignored for security
+
+mail.sender.email=your_gmail@gmail.com
+mail.sender.password=xxxx xxxx xxxx xxxx

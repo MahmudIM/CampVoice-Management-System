@@ -17,7 +17,6 @@
                     --warning-color: #f39c12;
                     --danger-color: #e74c3c;
                     --light-bg: #f8f9fa;
-                    --card-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
                 }
 
                 body {
@@ -36,11 +35,11 @@
                     background: white;
                     border-radius: 15px;
                     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-                    overflow: hidden;
                     width: 100%;
                     max-width: 950px;
                     display: flex;
-                    min-height: 600px;
+                    min-height: 700px;
+                    overflow: hidden;
                 }
 
                 .register-left {
@@ -53,202 +52,195 @@
                     align-items: center;
                     text-align: center;
                     flex: 1.2;
-                    position: relative;
-                }
-
-                .brand-logo-box {
-                    background: rgba(255, 255, 255, 0.05);
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-                    border-radius: 20px;
-                    padding: 1.5rem;
-                    display: inline-block;
-                    margin-bottom: 1.5rem;
                 }
 
                 .brand-name {
                     letter-spacing: 5px;
                     font-weight: 800;
                     text-transform: uppercase;
-                    margin: 0;
                     background: linear-gradient(to right, #ffffff, #3498db);
                     -webkit-background-clip: text;
                     -webkit-text-fill-color: transparent;
                     font-size: 2.5rem;
                 }
 
-                .brand-tagline {
-                    font-size: 0.85rem;
-                    letter-spacing: 3px;
-                    color: #3498db;
-                    text-transform: uppercase;
-                    font-weight: 600;
-                    margin-top: 5px;
-                }
-
-                .register-left-content {
-                    position: relative;
-                    z-index: 2;
-                }
-
                 .register-right {
-                    padding: 3rem;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
+                    padding: 2.5rem;
                     flex: 1;
                     background-color: white;
+                    overflow-y: auto;
                 }
 
-                .register-header h2 {
-                    color: var(--primary-color);
-                    font-weight: 700;
-                    font-size: 1.8rem;
-                }
-
+                /* UI Fix for Icons and Floating Labels */
                 .form-control,
                 .form-select {
-                    height: 50px;
-                    border-radius: 8px;
-                    border: 1px solid #e0e0e0;
-                    padding-left: 45px;
+                    height: 55px;
+                    padding-left: 3.5rem !important;
+                    border-radius: 10px;
                 }
 
                 .input-icon {
                     position: absolute;
-                    left: 15px;
+                    left: 1.2rem;
                     top: 50%;
                     transform: translateY(-50%);
-                    color: #6c757d;
-                    z-index: 5;
-                    font-size: 1.1rem;
+                    color: #3498db;
+                    z-index: 10;
+                    font-size: 1.2rem;
+                }
+
+                .form-floating>label {
+                    padding-left: 3.5rem;
+                }
+
+                .form-floating>.form-control:focus~label,
+                .form-floating>.form-control:not(:placeholder-shown)~label,
+                .form-floating>.form-select~label {
+                    transform: scale(.85) translateY(-1rem) translateX(1.5rem);
+                    background: white;
+                    padding: 0 10px;
+                    height: auto;
                 }
 
                 .btn-register {
                     background: linear-gradient(to right, #2c3e50, #3498db);
                     border: none;
-                    padding: 12px;
+                    padding: 14px;
                     font-weight: 600;
-                    border-radius: 8px;
+                    border-radius: 10px;
                     color: white;
-                    transition: all 0.3s ease;
-                }
-
-                .btn-register:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
-                }
-
-                .app-footer {
-                    margin-top: 2rem;
-                    color: rgba(255, 255, 255, 0.6);
-                    font-size: 0.85rem;
-                    text-align: center;
+                    margin-top: 10px;
                 }
 
                 @media (max-width: 768px) {
                     .register-container {
                         flex-direction: column;
                     }
-
-                    .register-left {
-                        padding: 2rem;
-                    }
                 }
             </style>
         </head>
 
         <body>
-            <% String errorMessage=(String) request.getAttribute("errorMessage"); String successMessage=(String)
-                request.getAttribute("successMessage"); %>
+            <% String errorMessage=(String) request.getAttribute("errorMessage"); %>
 
                 <div class="register-container">
                     <div class="register-left">
-                        <div class="register-left-content">
-                            <div class="brand-logo-box">
-                                <i class="bi bi-chat-right-quote-fill" style="font-size: 3rem; color: #3498db;"></i>
-                            </div>
-                            <h1 class="brand-name">CampVoice</h1>
-                            <p class="brand-tagline">Student Resolution Hub</p>
-
-                            <div class="mt-5">
-                                <h2 class="h4 fw-bold text-white mb-3">Join Us Today!</h2>
-                                <p class="px-lg-5">Create your account to start managing campus complaints efficiently
-                                    and transparently.</p>
-                            </div>
+                        <div class="brand-logo-box">
+                            <i class="bi bi-chat-right-quote-fill" style="font-size: 3rem; color: #3498db;"></i>
+                        </div>
+                        <h1 class="brand-name">CampVoice</h1>
+                        <p style="letter-spacing: 3px; color: #3498db; text-transform: uppercase; font-weight: 600;">
+                            Student Resolution Hub</p>
+                        <div class="mt-5 d-none d-lg-block">
+                            <h2 class="h4 fw-bold">Join Us Today!</h2>
+                            <p>Manage your campus complaints efficiently with your ABU Student ID.</p>
                         </div>
                     </div>
 
                     <div class="register-right">
-                        <div class="register-header text-center mb-4">
-                            <h2>Create Account</h2>
-                            <p class="text-muted">Fill in your details to get started</p>
+                        <div class="text-center mb-4">
+                            <h2 class="fw-bold">Create Account</h2>
+                            <p class="text-muted">Register with your Student ID</p>
                         </div>
 
-                        <% if (errorMessage !=null && !errorMessage.trim().isEmpty()) { %>
-                            <div class="alert alert-danger d-flex align-items-center" role="alert">
-                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        <% if (errorMessage !=null) { %>
+                            <div class="alert alert-danger py-2">
                                 <%= errorMessage %>
                             </div>
                             <% } %>
 
-                                <% if (successMessage !=null && !successMessage.trim().isEmpty()) { %>
-                                    <div class="alert alert-success d-flex align-items-center" role="alert">
-                                        <i class="bi bi-check-circle-fill me-2"></i>
-                                        <%= successMessage %>
+                                <!-- ✅ autocomplete="off" on the form prevents browser autofill -->
+                                <form method="post" action="register" autocomplete="off">
+
+                                    <div class="form-floating mb-3 position-relative">
+                                        <i class="bi bi-person-badge input-icon"></i>
+                                        <input type="text" class="form-control" id="username" name="username"
+                                            placeholder="Matric Number" required autocomplete="off"
+                                            pattern="^[uU](19|2[0-5])[cC][oO][1-2]\d{3}$"
+                                            title="Format: U19CO1... to U25CO2... (e.g. U23CO1010)">
+                                        <label for="username">Student ID</label>
                                     </div>
-                                    <% } %>
 
-                                        <form method="post" action="register">
-                                            <div class="form-floating mb-3 position-relative">
-                                                <i class="bi bi-person input-icon"></i>
-                                                <input type="text" class="form-control" id="username" name="username"
-                                                    placeholder="Username" required autocomplete="username">
-                                                <label for="username" class="ms-4 ps-3">Username</label>
-                                            </div>
+                                    <div class="form-floating mb-3 position-relative">
+                                        <i class="bi bi-envelope input-icon"></i>
+                                        <input type="email" class="form-control" id="email" name="email"
+                                            placeholder="name@example.com" required autocomplete="off">
+                                        <label for="email">Email Address</label>
+                                    </div>
 
-                                            <div class="form-floating mb-3 position-relative">
-                                                <i class="bi bi-lock input-icon"></i>
-                                                <input type="password" class="form-control" id="password"
-                                                    name="password" placeholder="Password" required minlength="8">
-                                                <label for="password" class="ms-4 ps-3">Password</label>
-                                            </div>
+                                    <div class="form-floating mb-3 position-relative">
+                                        <i class="bi bi-lock input-icon"></i>
+                                        <input type="password" class="form-control" id="password" name="password"
+                                            placeholder="Password" required minlength="8" autocomplete="new-password">
+                                        <label for="password">Password</label>
+                                    </div>
 
-                                            <div class="form-floating mb-3 position-relative">
-                                                <i class="bi bi-shield-lock input-icon"></i>
-                                                <input type="password" class="form-control" id="password2"
-                                                    name="password2" placeholder="Confirm Password" required>
-                                                <label for="password2" class="ms-4 ps-3">Confirm Password</label>
-                                            </div>
+                                    <div class="form-floating mb-3 position-relative">
+                                        <i class="bi bi-shield-lock input-icon"></i>
+                                        <input type="password" class="form-control" id="password2" name="password2"
+                                            placeholder="Confirm Password" required autocomplete="new-password">
+                                        <label for="password2">Confirm Password</label>
+                                    </div>
 
-                                            <div class="form-floating mb-4 position-relative">
-                                                <i class="bi bi-person-badge input-icon"></i>
-                                                <select class="form-select" id="role" name="role" required>
-                                                    <option value="STUDENT" selected>Student</option>
-                                                </select>
-                                                <label for="role" class="ms-4 ps-3">Role (Student Account)</label>
-                                                <div class="form-text mt-2 text-muted" style="font-size: 0.75rem;">
-                                                    <i class="bi bi-info-circle me-1"></i> Staff/Faculty accounts must
-                                                    be created by IT Administration.
-                                                </div>
-                                            </div>
+                                    <div class="form-floating mb-3 position-relative">
+                                        <i class="bi bi-building input-icon"></i>
+                                        <select id="facultySelect" class="form-select" onchange="updateDepts()"
+                                            required>
+                                            <option value="">-- Choose Faculty --</option>
+                                            <option value="engineering">Faculty of Engineering</option>
+                                            <option value="pharmacy" disabled>Faculty of Pharmacy (Soon)</option>
+                                            <option value="medicine" disabled>College of Medicine (Soon)</option>
+                                            <option value="education" disabled>Faculty of Education (Soon)</option>
+                                        </select>
+                                        <label for="facultySelect">Faculty</label>
+                                    </div>
 
-                                            <button type="submit" class="btn btn-register w-100 mb-3">Create
-                                                Account</button>
+                                    <div class="form-floating mb-4 position-relative">
+                                        <i class="bi bi-mortarboard input-icon"></i>
+                                        <select id="deptSelect" name="department" class="form-select" required disabled>
+                                            <option value="">Select Faculty First</option>
+                                        </select>
+                                        <label for="deptSelect">Department</label>
+                                    </div>
 
-                                            <div class="text-center mt-3">
-                                                <span class="text-muted small">Already have an account? </span>
-                                                <a href="login.jsp" class="text-decoration-none fw-bold"
-                                                    style="color: #3498db;">Sign In Here</a>
-                                            </div>
-                                        </form>
+                                    <input type="hidden" name="role" value="STUDENT">
+                                    <button type="submit" class="btn btn-register w-100">Create Account</button>
+
+                                    <div class="text-center mt-3">
+                                        <span class="text-muted small">Already have an account? </span>
+                                        <a href="login.jsp" class="text-decoration-none fw-bold"
+                                            style="color: #3498db;">Sign In</a>
+                                    </div>
+                                </form>
                     </div>
                 </div>
 
-                <footer class="app-footer">
-                    <p>© 2026 @Compeng - Ahmadu Bello University (CampVoice)</p>
+                <footer style="margin-top: 2rem; color: rgba(255,255,255,0.6); font-size: 0.85rem;">
+                    © 2026 @Compeng - Ahmadu Bello University
                 </footer>
 
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                <script>
+                    function updateDepts() {
+                        const faculty = document.getElementById('facultySelect').value;
+                        const dept = document.getElementById('deptSelect');
+                        dept.innerHTML = "";
+                        dept.disabled = false;
+                        if (faculty === "engineering") {
+                            const options = [
+                                { val: "Computer Engineering", text: "Computer Engineering" },
+                                { val: "Electrical", text: "Electrical Engineering (Soon)", disabled: true },
+                                { val: "Telecom", text: "Telecommunication (Soon)", disabled: true }
+                            ];
+                            options.forEach(opt => {
+                                let el = document.createElement("option");
+                                el.value = opt.val;
+                                el.textContent = opt.text;
+                                if (opt.disabled) el.disabled = true;
+                                dept.appendChild(el);
+                            });
+                        }
+                    }
+                </script>
         </body>
 
         </html>

@@ -6,3 +6,8 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+# node_modules
+src/main/resources/config.properties
+target/
+.idea/
+*.iml
